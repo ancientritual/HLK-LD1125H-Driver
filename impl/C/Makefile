@@ -8,9 +8,13 @@ SRCDIR=src
 VERSION=$(shell grep -oP '(?<=VERSION_MAJOR ).*' src/version.h).$(shell grep -oP '(?<=VERSION_MINOR ).*' src/version.h).$(shell grep -oP '(?<=VERSION_REV ).*' src/version.h)
 
 
-.PHONY: all clean
+.PHONY: all clean amd arm
 
 all: $(OBJDIR)/hlk_ld1125h-amd64-$(VERSION) $(OBJDIR)/hlk_ld1125h-arm64-$(VERSION)
+
+amd: $(OBJDIR)/hlk_ld1125h-amd64-$(VERSION)
+
+arm: $(OBJDIR)/hlk_ld1125h-arm64-$(VERSION)
 
 $(OBJDIR)/hlk_ld1125h-amd64-$(VERSION): $(OBJDIR)/hlk_ld1125h.o
 	$(CC) -o $@ $<
@@ -45,4 +49,3 @@ install: all
 	cp $(OBJDIR)/hlk_ld1125h-amd64-$(VERSION) /usr/local/bin/
 	cp $(OBJDIR)/hlk_ld1125h-arm64-$(VERSION) /usr/local/bin/
 	@echo "Installation done!"
-
